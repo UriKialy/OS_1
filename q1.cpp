@@ -1,6 +1,5 @@
-#include <iostream>
-
-int main(int argc, char* argv[]) {
+#include "q1.hpp"
+int main() {
     recursiveFunction();
     crashFunction();
     invalidMemoryAccess();
@@ -13,6 +12,9 @@ void crashFunction() {
     int numerator = 10;
     int denominator = 0;
     int result = numerator / denominator;
+    if(result == 0) {
+        std::cout << "Crash function: Division by zero" << std::endl;
+    }
 }
 void invalidMemoryAccess() {
     int* ptr = nullptr;
