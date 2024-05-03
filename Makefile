@@ -1,13 +1,11 @@
 CC = g++
-CFLAGS = -Wall -g -Wextra -std=c++11
+CFLAGS = -Wall -g -Wextra -pedantic -std=c++11
 
-all: q1 q2
+TARGET = q2
 
-q1: q1.cpp q1.hpp
-	$(CC) $(CFLAGS) -o q1 q1.cpp
+$(TARGET): q2.cpp
+	$(CC) $(CFLAGS) -o $(TARGET) q2.cpp
 
-q2: q2.cpp q2.hpp
-	$(CC) $(CFLAGS) -o q2 q2.cpp
-
+.PHONY: clean
 clean:
-	rm -f q1 q2
+	rm -f $(TARGET)

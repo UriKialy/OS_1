@@ -1,12 +1,8 @@
-#include "q1.hpp"
+#include <iostream>
+void crashFunction();
 int main() {
-    recursiveFunction();
     crashFunction();
-    invalidMemoryAccess();
     return 0;
-}
-void recursiveFunction() {
-    recursiveFunction();
 }
 void crashFunction() {
     int numerator = 10;
@@ -15,8 +11,4 @@ void crashFunction() {
     if(result == 0) {
         std::cout << "Crash function: Division by zero" << std::endl;
     }
-}
-void invalidMemoryAccess() {
-    int* ptr = nullptr;
-    *ptr = 10;
 }

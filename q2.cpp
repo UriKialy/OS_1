@@ -1,4 +1,5 @@
 #include "q2.hpp"
+
 using namespace std;
 // Function to calculate the Poisson distribution
 long double Poisson(int k, long double lambda) {
