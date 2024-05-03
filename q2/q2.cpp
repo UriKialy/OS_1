@@ -3,7 +3,7 @@
 using namespace std;
 // Function to calculate the Poisson distribution
 long double Poisson(int k, long double lambda) {
-    long double result = (std::exp(-lambda) * pow(lambda, k)) / tgamma(k + 1);
+    long double result = (std::exp(-lambda)) * (pow(lambda, k) / tgamma(k + 1));
     return result;
 }
 
