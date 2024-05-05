@@ -1,36 +1,31 @@
 # Define compiler and flags
 CC = g++
 CFLAGS = -Wall -g -std=c++11
-
-# Define library and executable names
-LIB_NAME = libpoisson.so
 EXEC_NAME = q3
 
 # Define source and object files
 POISSON_SRC = Poisson.cpp
 Q3_SRC = q3.cpp
-Q3_HDR = q3.hpp
+POISSON_HDR = Poisson.hpp
+POISSON_OBJ = libpoisson.so
+Q3_OBJ = q3.o
 
-# Object files for library and executable
-POISSON_OBJ = $(POISSON_SRC:.cpp=.o)
-Q3_OBJ = $(Q3_SRC:.cpp=.o)
+$(POISSON_OBJ): $(POISSON_SRC) $(POISSON_HDR)
+	$(CC) $(CFLAGS) -c -fPIC -o libpoisson.so Poisson.cpp
+
+$(Q3_OBJ): $(Q3_SRC) $(POISSON_HDR)
+	$(CC) $(CFLAGS) -c -o q3.o q3.cpp
 
 # All targets (phony target)
 all: $(EXEC_NAME)
 
-# Library target
-$(LIB_NAME): $(POISSON_OBJ) $(Q3_HDR)
-	$(CC) $(CFLAGS) -fPIC -shared -o $(LIB_NAME) $(POISSON_OBJ)
-
 # Executable target
-$(EXEC_NAME): $(Q3_OBJ) $(LIB_NAME)
+$(EXEC_NAME): $(Q3_OBJ) $(POISSON_OBJ)
 	$(CC) $(CFLAGS) -o $(EXEC_NAME) $(Q3_OBJ) -L. -lpoisson
 
-$(Q3_OBJ): $(Q3_SRC) $(Q3_HDR)
-	$(CC) -o $(Q3_OBJ) $(Q3_SRC)
 
 # Clean target
 clean:
-	rm -f $(POISSON_OBJ) $(Q3_OBJ) $(LIB_NAME) $(EXEC_NAME)
+	rm -f $(POISSON_OBJ) $(Q3_OBJ) $(POISSON_OBJ) $(EXEC_NAME)
 
 .PHONY: all clean
