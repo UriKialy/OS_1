@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -g -Wextra -pedantic -std=c++11
+CFLAGS = -Wall -g -Wextra  -lm -pedantic -std=c++11
 
 TARGET = q2
 
