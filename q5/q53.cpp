@@ -12,7 +12,7 @@ void maxSubArray(int seed, int n)
     for (int k = 0; k < n; k++)
     {
         sum = max(arr[k], sum + arr[k]);
-        best = max(best, sum);
+        best = best > sum ? best : sum;
     }
     cout << best << "\n";
 }

@@ -6,29 +6,27 @@ HEADER = q5.hpp
 
 # Define all .cpp files (excluding main.cpp)
 Q_FILES = q51.cpp q52.cpp q53.cpp
-OBJECTS = $(Q_FILES:.cpp=.o) main.o  
-# Define the C++ compiler (adjust if needed)
+
 CXX = g++
 
-# Define compiler flags (feel free to add more flags)
-CXXFLAGS = -Wall -g -std=c++11
-# Object file for main.cpp
-main.o: main.cpp $(HEADER)
-    $(CXX) $(CXXFLAGS) -c $<  # Compile main.cpp
-
-# Pattern rule to build executables with different q files
-$(TARGET)%: $(OBJECTS) $(HEADER)
-    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
-
-# Define object files for each executable variant
-q51.o: q51.cpp $(HEADER)
-q52.o: q52.cpp $(HEADER)
-q53.o: q53.cpp $(HEADER)
+# Define compiler flags for debugging and profiling
+CXXFLAGS = -Wall -pg -std=c++11
 
 # Rule to compile each .cpp file into an object file
 %.o: %.cpp $(HEADER)
-    $(CXX) $(CXXFLAGS) -c $<  # $< refers to the current source file
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-# Phony target for cleaning up object files
+# Rule to compile each variant of main executable
+main_q51: main.o q51.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+main_q52: main.o q52.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+main_q53: main.o q53.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Phony target for cleaning up object files and executables
+.PHONY: clean
 clean:
-    rm -f $(TARGET)*.o
+	rm -f main_* *.o
