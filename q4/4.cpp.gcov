@@ -1,0 +1,101 @@
+        -:    0:Source:4.cpp
+        -:    0:Graph:4.gcno
+        -:    0:Data:4.gcda
+        -:    0:Runs:9
+        -:    1:#include <iostream>
+        -:    2:#include <vector>
+        -:    3:#include <limits.h>
+        -:    4:
+        -:    5:using namespace std;
+        -:    6:
+        -:    7:// Function prototype
+        -:    8:void dijkstra(const std::vector<std::vector<int>>& graph, int size, int src);
+        -:    9:
+        -:   10:// Utility function to find the vertex with minimum distance value
+        -:   11:int minDistance(const std::vector<int>& dist, const std::vector<bool>& sptSet);
+        -:   12:
+        -:   13:// Function that implements Dijkstra's algorithm
+        4:   14:void dijkstra(const std::vector<std::vector<int>>& graph, int size, int src) {
+        4:   15:    std::vector<int> dist(size, INT_MAX);
+        4:   16:    std::vector<bool> sptSet(size, false);
+        -:   17:
+        4:   18:    dist[src] = 0;
+        -:   19:
+        9:   20:    for (int count = 0; count < size - 1; count++) {
+        5:   21:        int u = minDistance(dist, sptSet);
+        5:   22:        sptSet[u] = true;
+        -:   23:
+       17:   24:        for (int v = 0; v < size; v++) {
+       12:   25:            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]) {
+        4:   26:                dist[v] = dist[u] + graph[u][v];
+        -:   27:            }
+        -:   28:        }
+        -:   29:    }
+        -:   30:
+        -:   31:    // Output the distances
+       13:   32:    for (int i = 0; i < size; i++) {
+        9:   33:        std::cout << "Shortest distance from vertex " << src << " to vertex " << i << " is: " << dist[i] << std::endl;
+        -:   34:    }
+        4:   35:}
+        -:   36:
+        -:   37:// Utility function to find the vertex with minimum distance value
+        5:   38:int minDistance(const std::vector<int>& dist, const std::vector<bool>& sptSet) {
+        5:   39:    int min = INT_MAX, min_index;
+       17:   40:    for (size_t v = 0; v < dist.size(); v++) {
+       12:   41:        if (!sptSet[v] && dist[v] <= min) {
+        9:   42:            min = dist[v];
+        9:   43:            min_index = v;
+        -:   44:        }
+        -:   45:    }
+        5:   46:    return min_index;
+        -:   47:}
+        -:   48:
+        -:   49:// Driver code
+        9:   50:int main() {
+        -:   51:    int n;
+        9:   52:    std::cout << "Enter the size of the matrix: ";
+        9:   53:    std::cin >> n;
+        9:   54:    if(n<=0) {
+        1:   55:        std::cerr << "Error: Matrix size must be positive." << std::endl; // Exit if matrix size is non-positive
+        1:   56:        exit(1);
+        -:   57:    }
+        -:   58:
+       16:   59:    std::vector<std::vector<int>> adjacencyMatrix(n, std::vector<int>(n));
+        8:   60:    int edgesCount = 0;
+        -:   61:
+        8:   62:    std::cout << "Enter the matrix:" << std::endl;
+       21:   63:    for (int i = 0; i < n; ++i) {
+       45:   64:        for (int j = 0; j < n; ++j) {
+       32:   65:            std::cin >> adjacencyMatrix[i][j];
+       32:   66:            if(adjacencyMatrix[i][j]<0) {
+        1:   67:                std::cerr << "Error: Negative weight entered." << std::endl; // Exit if negative weight is entered
+        1:   68:                exit(1);
+        -:   69:            }
+       31:   70:            if(i==j&&adjacencyMatrix[i][j]!=0) {
+        1:   71:                std::cerr << "Error: Non-zero diagonal entry." << std::endl; // Exit if non-zero diagonal entry
+        1:   72:                exit(1);
+        -:   73:            }
+       30:   74:            if (adjacencyMatrix[i][j] != 0) {
+       15:   75:                ++edgesCount; // Add edge to count if non-zero weight is entered
+        -:   76:            }
+        -:   77:        }
+        -:   78:    }
+        -:   79:
+        6:   80:    if (edgesCount != n * (n - 1)) {
+        1:   81:        std::cerr << "Error: Too few or too many edges entered." << std::endl;
+        1:   82:        return 1; // Exit if incorrect number of edges entered
+        -:   83:    }
+        -:   84:
+        -:   85:    int sourceVertex;
+        5:   86:    std::cout << "Enter the source vertex: ";
+        5:   87:    std::cin >> sourceVertex;
+        5:   88:    if (cin.fail() || cin.peek() != '\n') {
+        1:   89:        std::cerr << "Error: Expected a single integer for the source vertex." << std::endl;
+        1:   90:        return 1; // Exit if invalid input for source vertex
+        -:   91:    }
+        -:   92:
+        4:   93:    dijkstra(adjacencyMatrix, n, sourceVertex);
+        -:   94:
+        4:   95:    return 0;
+        6:   96:}
+        -:   97:
