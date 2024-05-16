@@ -8,8 +8,8 @@ long double Poisson(int k, long double lambda) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        cout << "Error, not enough arguments" << std::endl;
+    if (argc!=2) {
+        cout << "Error" << std::endl;
         return 1;
     }
 
