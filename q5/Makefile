@@ -11,7 +11,7 @@ CXX = g++
 
 # Define compiler flags for debugging and profiling
 CXXFLAGS = -Wall -pg -std=c++11
-
+all: main_q52 main_q51 main_q53
 # Rule to compile each .cpp file into an object file
 %.o: %.cpp $(HEADER)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<

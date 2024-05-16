@@ -10,14 +10,15 @@ POISSON_HDR = Poisson.hpp
 POISSON_OBJ = libpoisson.so
 Q3_OBJ = q3.o
 
+# All targets (phony target)
+all: $(EXEC_NAME)
+
 $(POISSON_OBJ): $(POISSON_SRC) $(POISSON_HDR)
 	$(CC) $(CFLAGS) -c -fPIC -o libpoisson.so Poisson.cpp
 
 $(Q3_OBJ): $(Q3_SRC) $(POISSON_HDR)
 	$(CC) $(CFLAGS) -c -o q3.o q3.cpp
 
-# All targets (phony target)
-all: $(EXEC_NAME)
 
 # Executable target
 $(EXEC_NAME): $(Q3_OBJ) $(POISSON_OBJ)
