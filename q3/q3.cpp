@@ -5,7 +5,7 @@ int main() {
     for (int i = 0; i < 5; i++) {
         double lambda = array[i][0];
         double k = array[i][1];
-        long double result = Poisson(k,lambda);
+        long double result = Poisson(lambda,k);
         std::cout << "Poisson result for pair (" << lambda << ", " << k << "): " << result << std::endl;
     }
 

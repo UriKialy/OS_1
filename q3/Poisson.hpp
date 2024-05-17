@@ -2,4 +2,4 @@
 #include <iostream>
 #include <cmath>
 #pragma once
-long double Poisson(int k, long double lambda);
+long double Poisson(long double lambda,int k);
